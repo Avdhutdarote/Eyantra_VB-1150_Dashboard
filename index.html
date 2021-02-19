@@ -109,7 +109,7 @@
         $.getJSON('https://spreadsheets.google.com/feeds/list/1SxWHXJayuvCWXPE2aB1z6crYZonzkcbJrDrmionqWPc/5/public/full?alt=json', function(data) {
         	
             	var trHTML = '';
-
+              if(data.feed.entry!=undefined){
             	for (var i = 0; i < data.feed.entry.length; ++i) {
                 	var myData_map, myData_order;
 
@@ -125,7 +125,7 @@
                               '</td><td>' + data.feed.entry[i].gsx$timetaken.$t + 
                         	  '</td></tr>';
 
-                }
+                }}
 
                 console.log(trHTML);
         		$('#tableContent').html(trHTML);
@@ -144,7 +144,8 @@
         var jsonDataObject =[];
 
         $.getJSON('https://spreadsheets.google.com/feeds/list/1SxWHXJayuvCWXPE2aB1z6crYZonzkcbJrDrmionqWPc/5/public/full?alt=json', function(data) {
-        for (var i = 0; i < data.feed.entry.length; ++i) {
+          if(data.feed.entry!=undefined){
+          for (var i = 0; i < data.feed.entry.length; ++i) {
 
             var json_data = {
                 "City": data.feed.entry[i].gsx$city.$t,
@@ -179,7 +180,7 @@
                     
 
                 }
-            }
+            }}
         });
     }
     function refreshChart(){
@@ -187,6 +188,7 @@
     var graph_arr = [['Order ID', 'Time Taken', { role: 'style' }]];
     var bar_color = [];
     $.getJSON('https://spreadsheets.google.com/feeds/list/1SxWHXJayuvCWXPE2aB1z6crYZonzkcbJrDrmionqWPc/5/public/full?alt=json', function(data) {
+      if(data.feed.entry!=undefined){
       for (var i = 0; i < data.feed.entry.length; ++i) {
         var json_data = {
           "OrderID" : data.feed.entry[i].gsx$orderid.$t,
@@ -194,7 +196,7 @@
           "Priority": data.feed.entry[i].gsx$priority.$t
           };
           jsonDataObject.push(json_data);
-      };
+      };}
       // Setting color for the coloumns of graph according to priority of items
       for(var j in jsonDataObject){
         if(jsonDataObject[j].Priority == 'HP'){
